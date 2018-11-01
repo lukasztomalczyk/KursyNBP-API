@@ -1,0 +1,18 @@
+﻿@model List<CurrencyModel>
+
+@{
+    ViewData["Title"] = "Currency";
+}
+<div>
+    <h2>Aktualne kursy walut z NBP</h2>
+    <table class="table">
+        @foreach (var currencyRate in @Model)
+        {
+            <tr>
+                <td>@currencyRate.Waluta</td>
+                <td>@currencyRate.Kod</td>
+                <td>@currencyRate.Kurs</td>
+            </tr>
+        }
+    </table>
+</div>
