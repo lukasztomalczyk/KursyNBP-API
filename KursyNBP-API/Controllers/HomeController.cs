@@ -5,11 +5,17 @@ using kursyNBP.Models;
 using NBPApiClientCore;
 using System.Collections.Generic;
 using System.Linq;
+using NBPApiClientCore.Currency;
 
 namespace kursyNBP.Controllers
 {
     public class HomeController : Controller
     {
+        private ICurrencyAPI _currencyApi;
+        public HomeController(ICurrencyAPI currencyApi)
+        {
+            _currencyApi = currencyApi;
+        }
         public IActionResult Index()
         {
             return View();
@@ -33,14 +39,9 @@ namespace kursyNBP.Controllers
         }
         public IActionResult Currency()
         {
-            List<CurrencyModel> CurrencyList = new List<CurrencyModel>();
 
-            CurrencyAPI.GetCurrenciesFromApi(DateTime.Now.AddDays(-10), DateTime.Now);
-
-            CurrencyAPI.GetCurrenciesFromApi()
-                .ToList()
-                .ForEach(x=>CurrencyList.Add(new CurrencyModel() { Kod = x.Kod, Kurs = x.Kurs, Waluta = x.Waluta}));
-
+            var CurrencyList =
+                _currencyApi.GetCurrenciesFromApi(DateTime.Now.AddDays(-10), DateTime.Now);
             return View(CurrencyList);
         }
 

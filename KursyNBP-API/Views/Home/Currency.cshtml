@@ -1,18 +1,25 @@
-﻿@model List<CurrencyModel>
+﻿@model IDictionary<DateTime, List<NBPApiClientCore.ICurrencyRate>>
 
 @{
     ViewData["Title"] = "Currency";
 }
 <div>
     <h2>Aktualne kursy walut z NBP</h2>
-    <table class="table">
-        @foreach (var currencyRate in @Model)
+        @foreach (var currencyList in @Model)
         {
-            <tr>
-                <td>@currencyRate.Waluta</td>
-                <td>@currencyRate.Kod</td>
-                <td>@currencyRate.Kurs</td>
-            </tr>
+            @currencyList.Key
+            <br/>
+            <table class="table">
+
+            @foreach (var currencyRate in @currencyList.Value)
+             {
+                 <tr>
+                     <td>@currencyRate.Waluta</td>
+                     <td>@currencyRate.Kod</td>
+                     <td>@currencyRate.Kurs</td>
+                 </tr>
+             }
+            </table>
+
         }
-    </table>
 </div>

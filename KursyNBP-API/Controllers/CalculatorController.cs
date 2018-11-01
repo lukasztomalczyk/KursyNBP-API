@@ -13,9 +13,10 @@ namespace kursyNBP.Controllers
         private static List<CurrencyModel> GetCurrencyList()
         {
             List<CurrencyModel> CurrencyList = new List<CurrencyModel>();
-            CurrencyAPI.GetCurrenciesFromApi().ToList()
-                .ForEach(x => CurrencyList.Add(new CurrencyModel() { Kod = x.Kod, Kurs = x.Kurs, Waluta = x.Waluta }));
+            //CurrencyAPI.GetCurrenciesFromApi().ToList()
+                //.ForEach(x => CurrencyList.Add(new CurrencyModel() { Kod = x.Kod, Kurs = x.Kurs, Waluta = x.Waluta }));
             return CurrencyList;
+            
         }
 
 
