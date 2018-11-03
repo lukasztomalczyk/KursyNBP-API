@@ -11,8 +11,8 @@ namespace kursyNBP.Controllers
 {
     public class HomeController : Controller
     {
-        private ICurrencyAPI _currencyApi;
-        public HomeController(ICurrencyAPI currencyApi)
+        private ICurrencyApi _currencyApi;
+        public HomeController(ICurrencyApi currencyApi)
         {
             _currencyApi = currencyApi;
         }
@@ -37,11 +37,17 @@ namespace kursyNBP.Controllers
         {
             return View();
         }
-        public IActionResult Currency()
+        public IActionResult Currency(DateTime dateFrom, DateTime dateTo)
         {
 
+            if (dateFrom == DateTime.Parse("01.01.0001 00:00:00") || dateTo == DateTime.Parse("01.01.0001 00:00:00"))
+            {
+                dateFrom = DateTime.Now.AddDays(-1);
+                dateTo = DateTime.Now;
+            } 
+
             var CurrencyList =
-                _currencyApi.GetCurrenciesFromApi(DateTime.Now.AddDays(-10), DateTime.Now);
+               _currencyApi.GetCurrenciesFromApi(dateFrom, dateTo);
             return View(CurrencyList);
         }
 

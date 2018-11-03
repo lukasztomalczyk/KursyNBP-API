@@ -11,7 +11,7 @@ using NBPApiClientCore.Currency;
 
 namespace NBPApiClientCore
 {
-    public class CurrencyAPI : ICurrencyAPI
+    public class CurrencyAPI : ICurrencyApi
     {
         private readonly HttpClient Client = new HttpClient();
 
@@ -26,7 +26,7 @@ namespace NBPApiClientCore
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public IDictionary<DateTime, List<ICurrencyRate>> GetCurrenciesFromApi(DateTime fromDate, DateTime toDate)
+        public IDictionary<DateTime, IList<ICurrencyRate>> GetCurrenciesFromApi(DateTime fromDate, DateTime toDate)
         {
             return RunAsync(fromDate, toDate).GetAwaiter().GetResult();
         }
@@ -43,19 +43,16 @@ namespace NBPApiClientCore
             }
         }
 
-     
-        private async Task<IDictionary<DateTime, List<ICurrencyRate>>> RunAsync(DateTime fromDate, DateTime toDate)
+        private async Task<IDictionary<DateTime, IList<ICurrencyRate>>> RunAsync(DateTime fromDate, DateTime toDate)
         {
-            IDictionary<DateTime, List<ICurrencyRate>> rates = new ConcurrentDictionary<DateTime, List<ICurrencyRate>>();
+     
+            IDictionary<DateTime, IList<ICurrencyRate>> rates = new ConcurrentDictionary<DateTime, IList<ICurrencyRate>>();
             try
             {
-                var tableAArray = await GetProductAsync(string.Format(ApiLink + "/" + fromDate.ToString("yyyy-MM-dd") + "/" + toDate.ToString("yyyy-MM-dd")));
-
+                var tableAArray = await GetProductAsync(string.Format(ApiLink + fromDate.ToString("yyyy-MM-dd") + "/" + toDate.ToString("yyyy-MM-dd")));
                 foreach (var tableA in tableAArray)
                 {
                     var currencyRateList = new List<ICurrencyRate>();
-
-
                     foreach (var rates1 in tableA.rates)
                     {
                         currencyRateList.Add(new CurrencyRate()
@@ -65,12 +62,9 @@ namespace NBPApiClientCore
                             Kod = rates1.code
                         });
                     }
-
                     rates.Add(DateTime.Parse(tableA.effectiveDate), currencyRateList);
                 }
-
-
-                return rates;
+                return rates.OrderBy(x => x.Key).ToDictionary(t => t.Key, t => t.Value);
             }
             catch (Exception e)
             {

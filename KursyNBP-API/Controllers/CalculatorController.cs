@@ -5,16 +5,22 @@ using kursyNBP.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NBPApiClientCore;
+using NBPApiClientCore.Currency;
 
 namespace kursyNBP.Controllers
 {
     public class CalculatorController : Controller
     {
-        private static List<CurrencyModel> GetCurrencyList()
+        ICurrencyApi _currencyApi;
+        public CalculatorController(ICurrencyApi currencyApi)
         {
-            List<CurrencyModel> CurrencyList = new List<CurrencyModel>();
-            //CurrencyAPI.GetCurrenciesFromApi().ToList()
-                //.ForEach(x => CurrencyList.Add(new CurrencyModel() { Kod = x.Kod, Kurs = x.Kurs, Waluta = x.Waluta }));
+            _currencyApi = currencyApi;
+        }
+        private IList<ICurrencyRate> GetTodayCurrencyList()
+        {
+            var CurrencyList =
+                _currencyApi.GetCurrenciesFromApi(DateTime.Now.AddDays(-1), DateTime.Now).Select(x=>x.Value).FirstOrDefault();
+
             return CurrencyList;
             
         }
@@ -23,7 +29,7 @@ namespace kursyNBP.Controllers
         // GET: Calculator
         public ActionResult Index()
         {
-            return View(GetCurrencyList());
+            return View(GetTodayCurrencyList());
         }
 
         // POST: Calculator/Create
@@ -43,7 +49,7 @@ namespace kursyNBP.Controllers
             ViewBag.result = currencyRate.CalculateCurrency();
             ViewBag.LastAmount = zl;
 
-           return View("Index", GetCurrencyList());
+           return View("Index", GetTodayCurrencyList());
         }
         // POST: Calculator/Delete/5
     }

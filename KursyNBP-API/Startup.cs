@@ -33,7 +33,7 @@ namespace kursyNBP
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddTransient<ICurrencyAPI, CurrencyAPI>();
+            services.AddTransient<ICurrencyApi, CurrencyAPI>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
