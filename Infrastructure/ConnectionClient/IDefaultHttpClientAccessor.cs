@@ -2,9 +2,9 @@
 
 namespace Infrastructure.ConnectionClient
 {
-    public interface IClient
+    public interface IDefaultHttpClientAccessor
     {
-        void SetupConnection(string url);
+        void SetConnection(string url);
         Task<string> GetStringAsync(string url);
     }
 }

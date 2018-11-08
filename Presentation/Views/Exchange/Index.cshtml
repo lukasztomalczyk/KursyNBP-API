@@ -1,4 +1,4 @@
-﻿
+﻿@model Application.DTO.ResultDTO
 <!DOCTYPE html>
 
 <html>
@@ -7,7 +7,10 @@
 </head>
 <body>
 <div>
-      
+      @foreach (var item in Model.Rattes)
+      {
+          <span>code: @item.code , currency: @item.currency, mid: @item.mid</span><br>
+      }
 </div>
 </body>
 </html>

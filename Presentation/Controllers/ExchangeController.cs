@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Application.DTO;
 using Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NBPApiClientCore;
-using NBPApiClientCore.Currency;
+
 
 namespace Presentation.Controllers
 {
@@ -21,15 +18,12 @@ namespace Presentation.Controllers
             _exchangeService = exchangeService;
         }
         
-        [HttpGet("/{from?}/{to?}")]
-        public async Task<ActionResult> Index([FromQuery] string from = null, [FromQuery] string to = null)
+        [HttpGet("{from?}/{to?}")]
+        public async Task<ActionResult> Index([FromRoute] string from, [FromRoute] string to)
         {
-            var result = await _exchangeService.CurrenciesAsync(default(DateTime), default(DateTime));
-            
-            
-            return View();
+            var result = await _exchangeService.CurrenciesAsync(from, to);
+
+            return View(new ResultDTO() { Rattes = result.rates.ToList() });
         }
-
-
     }
 }

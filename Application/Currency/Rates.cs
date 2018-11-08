@@ -1,4 +1,4 @@
-﻿namespace NBPApiClientCore
+﻿namespace Application.Currency
 {
     public class Rates
     {
