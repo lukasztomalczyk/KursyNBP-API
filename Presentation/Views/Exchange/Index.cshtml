@@ -1,16 +1,27 @@
 ﻿@model Application.DTO.ResultDTO
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
 <div>
-      @foreach (var item in Model.Rattes)
-      {
-          <span>code: @item.code , currency: @item.currency, mid: @item.mid</span><br>
-      }
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int count = 0; }
+            @foreach (var item in Model.Rattes)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@item.code</td>
+                    <td>@item.currency</td>
+                    <td>@item.mid</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-</body>
-</html>
