@@ -20,9 +20,9 @@
             <div class="inner">
                 <h3 class="masthead-brand">Cover</h3>
                 <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="#">Home</a>
+                    @Html.ActionLink("Home", "index", "Home", null, new { @class = "nav-link active" })
                     @Html.ActionLink("Kursy", "index", "Exchange", null, new { @class = "nav-link" })
-                    <a class="nav-link" href="#">Autor</a>
+                    @Html.ActionLink("Autor", "author", "Home", null, new { @class = "nav-link" })
                 </nav>
             </div>
         </header>
@@ -30,6 +30,8 @@
         <partial name="_CookieConsentPartial" />
 
         <div class="container body-content">
+            <br />
+            <br />
             @RenderBody()
             <hr />
 
