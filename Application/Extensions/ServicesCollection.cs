@@ -10,7 +10,7 @@ namespace Application.Extensions
     {
         public static void AddDependency(this IServiceCollection services, params Assembly[] assemblies)
         {
-            services.AddScoped<IDefaultHttpClientAccessor, DefaultHttpClientAccessor>();
+            services.AddTransient<IDefaultHttpClientAccessor, DefaultHttpClientAccessor>();
             services.AddScoped<IExchangeRateService, ExchangeRateService>();
         }
     }

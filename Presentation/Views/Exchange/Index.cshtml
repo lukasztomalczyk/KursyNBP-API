@@ -1,39 +1,40 @@
 ﻿@model Application.DTO.ResultDTO
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">from: </span>
+<form asp-controller="Exchange" asp-action="Index" method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">from: </span>
+        </div>
+        <input type="text" name="FromDate" class="datepicker" placeholder="yyy-mm-dd" aria-label="Username" aria-describedby="basic-addon1">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">from: </span>
+        </div>
+        <input type="text" name="ToDate" class="datepicker" placeholder="yyy-mm-dd" aria-label="Username" aria-describedby="basic-addon1">
+        <button type="submit" class="btn-default">Show</button>
     </div>
-    <input type="text" name="datepicker" class="datepicker" placeholder="yyy-mm-dd" aria-label="Username" aria-describedby="basic-addon1">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">from: </span>
-    </div>
-    <input type="text" name="datepicker" class="datepicker" placeholder="yyy-mm-dd" aria-label="Username" aria-describedby="basic-addon1">
-
-</div>
-
-<div>
-    <table class="table table-hover table-dark">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ int count = 0; }
-            @foreach (var item in Model.Rattes)
-            {
-                count++;
+    </form>
+    <div>
+        <table class="table table-hover table-dark">
+            <thead>
                 <tr>
-                    <th scope="row">@count</th>
-                    <td>@item.code</td>
-                    <td>@item.currency</td>
-                    <td>@item.mid</td>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @{ int count = 0; }
+                @foreach (var item in Model.Rattes)
+                {
+                    count++;
+                    <tr>
+                        <th scope="row">@count</th>
+                        <td>@item.code</td>
+                        <td>@item.currency</td>
+                        <td>@item.mid</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

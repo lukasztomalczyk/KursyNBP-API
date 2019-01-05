@@ -17,7 +17,11 @@
     <script type="text/javascript" src="~/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".datepicker").datepicker();
+            $(".datepicker").datepicker(    
+                {
+                    format: 'yyyy-mm-dd',
+                    autoclose: true
+                });
         });
     </script>
 </head>

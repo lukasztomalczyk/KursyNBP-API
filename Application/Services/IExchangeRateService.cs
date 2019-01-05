@@ -6,6 +6,6 @@ namespace Application.Services
 {
     public interface IExchangeRateService
     {
-        Task<Currencies> CurrenciesAsync(string fromDate, string toDate);
+        Task<Currencies> CurrenciesAsync(DateTime fromDate, DateTime toDate);
     }
 }

@@ -25,16 +25,22 @@ namespace Application.Services
             _client.SetConnection(_options.MainURL);
         }
 
-        public async Task<Currencies> CurrenciesAsync(string fromDate, string toDate)
+        public async Task<Currencies> CurrenciesAsync(DateTime fromDate, DateTime toDate)
         {
             var result = await _client.GetStringAsync(UrlWithDate(fromDate, toDate));
             return MapToCurrencies(result);
         }
 
-        private string UrlWithDate(string from, string to)
+        private string UrlWithDate(DateTime from, DateTime to)
         {
-            return (String.IsNullOrWhiteSpace(from) && String.IsNullOrWhiteSpace(to)) 
-                    ? _options.Currencies : _options.Currencies + "/" + from + "/" + to;
+            if (from != default(DateTime) && to != default(DateTime))
+            {
+                return _options.Currencies + Convert.ToDateTime(from).ToString("yyyy-mm-dd") + "/" + Convert.ToDateTime(to).ToString("yyyy-mm-dd");
+            }
+            else
+            {
+                return _options.Currencies;
+            }
         }
     }
 }

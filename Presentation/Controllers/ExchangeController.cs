@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using Application.DTO;
 using Application.Services;
+using Application.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using System;
 
 namespace Presentation.Controllers
 {
@@ -18,12 +19,22 @@ namespace Presentation.Controllers
             _exchangeService = exchangeService;
         }
         
-        [HttpGet("{from?}/{to?}")]
-        public async Task<ActionResult> Index([FromRoute] string from, [FromRoute] string to)
+        [HttpGet]
+        public async Task<ActionResult> Index()
         {
-            var result = await _exchangeService.CurrenciesAsync(from, to);
+            var result = await _exchangeService.CurrenciesAsync(default(DateTime), default(DateTime));
 
             return View(new ResultDTO() { Rattes = result.rates.ToList() });
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Index([FromForm] DatePicker datePicker)
+        {
+            var result = await _exchangeService.CurrenciesAsync(datePicker.FromDate, datePicker.ToDate);
+
+            return View(new ResultDTO() { Rattes = result.rates.ToList() });
+        }
+
+
     }
 }
