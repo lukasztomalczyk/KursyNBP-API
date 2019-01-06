@@ -5,6 +5,6 @@ namespace Application.DTO
 {
     public class ResultDTO
     {
-        public List<Rates> Rattes { get; set; }
+        public Currencies[] Currencies { get; set; }
     }
 }

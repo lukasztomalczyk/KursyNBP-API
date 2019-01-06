@@ -1,40 +1,48 @@
 ﻿@model Application.DTO.ResultDTO
 
+@{ 
+    var todayDayOne = DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd");
+    var yesterdayDateTime = DateTime.Now.AddDays(-4).ToString("yyyy-MM-dd");
+}
 <form asp-controller="Exchange" asp-action="Index" method="post">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">from: </span>
+            <span>from: &nbsp;&nbsp;</span>
         </div>
-        <input type="text" name="FromDate" class="datepicker" placeholder="yyy-mm-dd" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" name="FromDate" class="datepicker" value="@yesterdayDateTime" aria-label="Username" aria-describedby="basic-addon1">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">from: </span>
+            <span>to: &nbsp;&nbsp;</span>
         </div>
-        <input type="text" name="ToDate" class="datepicker" placeholder="yyy-mm-dd" aria-label="Username" aria-describedby="basic-addon1">
-        <button type="submit" class="btn-default">Show</button>
+        <input type="text" name="ToDate" class="datepicker" value="@todayDayOne" aria-label="Username" aria-describedby="basic-addon1">
+        <button type="submit" class="btn-secondary">Show</button>
     </div>
     </form>
-    <div>
-        <table class="table table-hover table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ int count = 0; }
-                @foreach (var item in Model.Rattes)
-                {
-                    count++;
-                    <tr>
-                        <th scope="row">@count</th>
-                        <td>@item.code</td>
-                        <td>@item.currency</td>
-                        <td>@item.mid</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+<div>
+    @foreach (var item in Model.Currencies)
+     {
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th colspan="4" align="center"><b>Exchange rates from:</b> @item.effectiveDate</th>
+            </tr>
+        </thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        @{ int count = 0; }
+        @foreach (var cur in item.rates)
+         {
+            count++;
+            <tr>
+                <th scope="row">@count</th>
+                <td>@cur.code</td>
+                <td>@cur.currency</td>
+                <td>@cur.mid</td>
+            </tr>
+         }
+    </table>
+     }
+ </div>

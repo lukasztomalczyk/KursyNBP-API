@@ -25,7 +25,7 @@ namespace Application.Services
             _client.SetConnection(_options.MainURL);
         }
 
-        public async Task<Currencies> CurrenciesAsync(DateTime fromDate, DateTime toDate)
+        public async Task<Currencies[]> CurrenciesAsync(DateTime fromDate, DateTime toDate)
         {
             var result = await _client.GetStringAsync(UrlWithDate(fromDate, toDate));
             return MapToCurrencies(result);
@@ -35,7 +35,7 @@ namespace Application.Services
         {
             if (from != default(DateTime) && to != default(DateTime))
             {
-                return _options.Currencies + Convert.ToDateTime(from).ToString("yyyy-mm-dd") + "/" + Convert.ToDateTime(to).ToString("yyyy-mm-dd");
+                return _options.Currencies + Convert.ToDateTime(from).ToString("yyyy-MM-dd") + "/" + Convert.ToDateTime(to).ToString("yyyy-MM-dd");
             }
             else
             {

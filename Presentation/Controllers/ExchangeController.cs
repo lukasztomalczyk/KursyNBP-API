@@ -24,7 +24,7 @@ namespace Presentation.Controllers
         {
             var result = await _exchangeService.CurrenciesAsync(default(DateTime), default(DateTime));
 
-            return View(new ResultDTO() { Rattes = result.rates.ToList() });
+            return View(new ResultDTO() { Currencies = result });
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace Presentation.Controllers
         {
             var result = await _exchangeService.CurrenciesAsync(datePicker.FromDate, datePicker.ToDate);
 
-            return View(new ResultDTO() { Rattes = result.rates.ToList() });
+            return View(new ResultDTO() { Currencies = result });
         }
 
 
