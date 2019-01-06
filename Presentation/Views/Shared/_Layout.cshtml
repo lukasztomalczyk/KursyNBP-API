@@ -32,9 +32,15 @@
             <div class="inner">
                 <h3 class="masthead-brand">Cover</h3>
                 <nav class="nav nav-masthead justify-content-center">
-                    @Html.ActionLink("Home", "index", "Home", null, new { @class = "nav-link active" })
-                    @Html.ActionLink("Kursy", "index", "Exchange", null, new { @class = "nav-link" })
-                    @Html.ActionLink("Autor", "author", "Home", null, new { @class = "nav-link" })
+                    @{ string cookie = ViewData["cookie"].ToString();
+                        string index = (cookie == "index") ? "nav-link active" : "nav-link";
+                        string kursy = (cookie == "kursy") ? "nav-link active" : "nav-link";
+                        string author = (cookie == "author") ? "nav-link active" : "nav-link";
+
+                       }
+                    @Html.ActionLink("Home", "index", "Home", null, new { @class = index })
+                    @Html.ActionLink("Kursy", "index", "Exchange", null, new { @class = kursy})
+                    @Html.ActionLink("Autor", "author", "Home", null, new { @class = author })
                 </nav>
             </div>
         </header>

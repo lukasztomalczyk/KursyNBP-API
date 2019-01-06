@@ -15,6 +15,7 @@ namespace Presentation.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["cookie"] = "index";
             return View();
         }
 

@@ -23,13 +23,14 @@ namespace Presentation.Controllers
         public async Task<ActionResult> Index()
         {
             var result = await _exchangeService.CurrenciesAsync(default(DateTime), default(DateTime));
-
+            ViewData["cookie"] = "kursy";
             return View(new ResultDTO() { Currencies = result });
         }
 
         [HttpPost]
         public async Task<ActionResult> Index([FromForm] DatePicker datePicker)
         {
+            ViewData["cookie"] = "kursy";
             var result = await _exchangeService.CurrenciesAsync(datePicker.FromDate, datePicker.ToDate);
 
             return View(new ResultDTO() { Currencies = result });
