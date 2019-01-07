@@ -6,6 +6,8 @@ using Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Application.Currency;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Presentation.Controllers
 {
@@ -25,6 +27,20 @@ namespace Presentation.Controllers
         {
             var result = await _exchangeService.CurrenciesAsync(default(DateTime), default(DateTime));
             ViewData["cookie"] = "kursy";
+
+            //var listaa = new Dictionary<string, string>();
+            //foreach (var item in result.Result)
+            //{
+            //    foreach (var res in item.rates)
+            //    {
+            //        listaa.Add(res.code, res.currency);
+            //    }
+            //}
+            //foreach (var item in listaa)
+            //{
+            //    Debug.WriteLine($"<option value=\"{item.Key}\">{item.Value} ({item.Key})</option>");
+            //}
+
             return View(result);
         }
 

@@ -1,4 +1,5 @@
-﻿
+﻿@model Application.Models.CalculateValute;
+
 @{
     ViewData["Title"] = "Calculator";
 }
@@ -6,28 +7,111 @@
 
 <h1>convert the course</h1><br /><br />
 
-<form asp-controller="Calculator" asp-action="Cal" method="post">
+<form asp-controller="Calculator" asp-action="Calculate" method="post">
+    <input type="hidden" id="basiccurrency" name="basiccurrency" value="">
+    <input type="hidden" id="targetcurrency" name="targetcurrency" value="">
+    <input type="hidden" id="value" name="value" value="0">
     <div class="row">
         <div class="col">
             <div class="form-group">
                 <label for="formGroupExampleInput">basic currency</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                <input type="text" class="form-control" name="basiccurrencyinput" id="basiccurrencyinput" placeholder="enter a value">
+                <select class="custom-select my-1 mr-sm-2" name="basiccurrencycode" id="basiccurrencycode">
                     <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="THB">bat (Tajlandia) (THB)</option>
+                    <option value="USD">dolar amerykański (USD)</option>
+                    <option value="AUD">dolar australijski (AUD)</option>
+                    <option value="HKD">dolar Hongkongu (HKD)</option>
+                    <option value="CAD">dolar kanadyjski (CAD)</option>
+                    <option value="NZD">dolar nowozelandzki (NZD)</option>
+                    <option value="SGD">dolar singapurski (SGD)</option>
+                    <option value="EUR">euro (EUR)</option>
+                    <option value="HUF">forint (Węgry) (HUF)</option>
+                    <option value="CHF">frank szwajcarski (CHF)</option>
+                    <option value="GBP">funt szterling (GBP)</option>
+                    <option value="UAH">hrywna (Ukraina) (UAH)</option>
+                    <option value="JPY">jen (Japonia) (JPY)</option>
+                    <option value="CZK">korona czeska (CZK)</option>
+                    <option value="DKK">korona duńska (DKK)</option>
+                    <option value="ISK">korona islandzka (ISK)</option>
+                    <option value="NOK">korona norweska (NOK)</option>
+                    <option value="SEK">korona szwedzka (SEK)</option>
+                    <option value="HRK">kuna (Chorwacja) (HRK)</option>
+                    <option value="RON">lej rumuński (RON)</option>
+                    <option value="BGN">lew (Bułgaria) (BGN)</option>
+                    <option value="TRY">lira turecka (TRY)</option>
+                    <option value="ILS">nowy izraelski szekel (ILS)</option>
+                    <option value="CLP">peso chilijskie (CLP)</option>
+                    <option value="PHP">peso filipińskie (PHP)</option>
+                    <option value="MXN">peso meksykańskie (MXN)</option>
+                    <option value="ZAR">rand (Republika Południowej Afryki) (ZAR)</option>
+                    <option value="BRL">real (Brazylia) (BRL)</option>
+                    <option value="MYR">ringgit (Malezja) (MYR)</option>
+                    <option value="RUB">rubel rosyjski (RUB)</option>
+                    <option value="IDR">rupia indonezyjska (IDR)</option>
+                    <option value="INR">rupia indyjska (INR)</option>
+                    <option value="KRW">won południowokoreański (KRW)</option>
+                    <option value="CNY">yuan renminbi (Chiny) (CNY)</option>
+                    <option value="XDR">SDR (MFW) (XDR)</option>
                 </select>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="formGroupExampleInput2">target currency</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+                <input type="text" class="form-control" name="targetcurrencyinput" id="targetcurrencyinput" placeholder="enter a value">
+                <select class="custom-select my-1 mr-sm-2" name="targetcurrencycode" id="targetcurrencycode">
+                    <option selected>Choose...</option>
+                    <option value="THB">bat (Tajlandia) (THB)</option>
+                    <option value="USD">dolar amerykański (USD)</option>
+                    <option value="AUD">dolar australijski (AUD)</option>
+                    <option value="HKD">dolar Hongkongu (HKD)</option>
+                    <option value="CAD">dolar kanadyjski (CAD)</option>
+                    <option value="NZD">dolar nowozelandzki (NZD)</option>
+                    <option value="SGD">dolar singapurski (SGD)</option>
+                    <option value="EUR">euro (EUR)</option>
+                    <option value="HUF">forint (Węgry) (HUF)</option>
+                    <option value="CHF">frank szwajcarski (CHF)</option>
+                    <option value="GBP">funt szterling (GBP)</option>
+                    <option value="UAH">hrywna (Ukraina) (UAH)</option>
+                    <option value="JPY">jen (Japonia) (JPY)</option>
+                    <option value="CZK">korona czeska (CZK)</option>
+                    <option value="DKK">korona duńska (DKK)</option>
+                    <option value="ISK">korona islandzka (ISK)</option>
+                    <option value="NOK">korona norweska (NOK)</option>
+                    <option value="SEK">korona szwedzka (SEK)</option>
+                    <option value="HRK">kuna (Chorwacja) (HRK)</option>
+                    <option value="RON">lej rumuński (RON)</option>
+                    <option value="BGN">lew (Bułgaria) (BGN)</option>
+                    <option value="TRY">lira turecka (TRY)</option>
+                    <option value="ILS">nowy izraelski szekel (ILS)</option>
+                    <option value="CLP">peso chilijskie (CLP)</option>
+                    <option value="PHP">peso filipińskie (PHP)</option>
+                    <option value="MXN">peso meksykańskie (MXN)</option>
+                    <option value="ZAR">rand (Republika Południowej Afryki) (ZAR)</option>
+                    <option value="BRL">real (Brazylia) (BRL)</option>
+                    <option value="MYR">ringgit (Malezja) (MYR)</option>
+                    <option value="RUB">rubel rosyjski (RUB)</option>
+                    <option value="IDR">rupia indonezyjska (IDR)</option>
+                    <option value="INR">rupia indyjska (INR)</option>
+                    <option value="KRW">won południowokoreański (KRW)</option>
+                    <option value="CNY">yuan renminbi (Chiny) (CNY)</option>
+                    <option value="XDR">SDR (MFW) (XDR)</option>
+                </select>
             </div>
         </div>
     </div>
-        <div class="form-group">
-            <button type="submit" class="btn-secondary">calculate</button>
-        </div>
+    <div class="form-group">
+        <button type="submit" class="btn-secondary">calculate</button>
+    </div>
+    <br />
+    @{ if (Model.value != 0)
+        {
+            <p>
+                current sales rate: @Model.basiccurrency (@Model.basiccurrencycode)<br />
+                current buy rate: @Model.targetcurrency (@Model.targetcurrencycode)<br /><br />
+                <h2>you receive:  @Model.value (@Model.targetcurrencycode)</h2>
+            </p>
+        }
+    }
 </form>

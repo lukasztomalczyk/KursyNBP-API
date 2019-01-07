@@ -12,6 +12,7 @@ namespace Application.Extensions
         {
             services.AddScoped<IDefaultHttpClientAccessor, DefaultHttpClientAccessor>();
             services.AddScoped<IExchangeRateService, ExchangeRateService>();
+            services.AddScoped<ICalculatorService, CalculatorService>();
         }
     }
 }
