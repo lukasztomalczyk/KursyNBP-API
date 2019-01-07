@@ -38,10 +38,12 @@
                         string index = (cookie == "index") ? "nav-link active" : "nav-link";
                         string kursy = (cookie == "kursy") ? "nav-link active" : "nav-link";
                         string author = (cookie == "author") ? "nav-link active" : "nav-link";
+                        string cal = (cookie == "cal") ? "nav-link active" : "nav-link";
 
-                       }
+                    }
                     @Html.ActionLink("Home", "index", "Home", null, new { @class = index })
-                    @Html.ActionLink("Kursy", "index", "Exchange", null, new { @class = kursy})
+                    @Html.ActionLink("Exchange", "index", "Exchange", null, new { @class = kursy })
+                    @Html.ActionLink("Calculator", "index", "Calculator", null, new { @class = cal })
                     @Html.ActionLink("Autor", "author", "Home", null, new { @class = author })
                 </nav>
             </div>
