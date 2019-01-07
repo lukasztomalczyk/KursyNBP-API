@@ -25,7 +25,7 @@ namespace Application.Services
             _client.SetConnection(_options.MainURL);
         }
 
-        public async Task<Currencies[]> CurrenciesAsync(DateTime fromDate, DateTime toDate)
+        public async Task<ResultModel<Currencies[]>> CurrenciesAsync(DateTime fromDate, DateTime toDate)
         {
             var result = await _client.GetStringAsync(UrlWithDate(fromDate, toDate));
             return MapToCurrencies(result);

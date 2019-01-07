@@ -1,7 +1,9 @@
-﻿@model Application.DTO.ResultDTO
+﻿@using Application.Currency;
+@model Application.DTO.ResultModel<Currencies[]>
 
 @{ 
-    var todayDayOne = DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd");
+    ViewData["Title"] = "Kursy";
+    var todayDayOne = DateTime.Now.ToString("yyyy-MM-dd");
     var yesterdayDateTime = DateTime.Now.AddDays(-4).ToString("yyyy-MM-dd");
 }
 <form asp-controller="Exchange" asp-action="Index" method="post">
@@ -9,16 +11,16 @@
         <div class="input-group-prepend">
             <span>from: &nbsp;&nbsp;</span>
         </div>
-        <input type="text" name="FromDate" class="datepicker" value="@yesterdayDateTime" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" name="FromDate" readonly class="datepicker" value="@yesterdayDateTime" aria-label="Username" aria-describedby="basic-addon1">
         <div class="input-group-prepend">
             <span>&nbsp;&nbsp;to: &nbsp;&nbsp;</span>
         </div>
-        <input type="text" name="ToDate" class="datepicker" value="@todayDayOne" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" name="ToDate" readonly class="datepicker" value="@todayDayOne" aria-label="Username" aria-describedby="basic-addon1">
         <button type="submit" class="btn-secondary">Show</button>
     </div>
     </form>
 <div>
-    @foreach (var item in Model.Currencies)
+    @foreach (var item in Model.Result)
      {
     <table class="table table-hover table-dark">
         <thead>

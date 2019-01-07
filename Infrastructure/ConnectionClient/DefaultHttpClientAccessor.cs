@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Infrastructure.Options;
-using Microsoft.Extensions.Options;
 
 namespace Infrastructure.ConnectionClient
 {
@@ -22,7 +20,16 @@ namespace Infrastructure.ConnectionClient
         
         public async Task<string> GetStringAsync(string url)
         {
-            return await HttpClient.GetStringAsync(url);
+            try
+            {
+                return await HttpClient.GetStringAsync(url);
+            }
+            catch (Exception)
+            {
+                var result = new Task<string>(()=>
+                 "");
+                return await result;
+            }
         }
     }
 }

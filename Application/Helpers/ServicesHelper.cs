@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Currency;
+using Application.DTO;
 using Newtonsoft.Json;
 
 namespace Application.Helpers
 {
     public static class ServicesHelper
     {
-        public static Currencies[] MapToCurrencies(string data)
+        public static ResultModel<Currencies[]> MapToCurrencies(string data)
         {
             try
             {
-                var result = JsonConvert.DeserializeObject<Currencies[]>(data);
+                var json = JsonConvert.DeserializeObject<Currencies[]>(data);
+                var result = new ResultModel<Currencies[]>() { Result = json,
+                Code = 200,
+                Message = null };
                 return result;
             }
             catch (Exception e)

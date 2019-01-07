@@ -1,0 +1,10 @@
+﻿@model Application.DTO.ResultModel<object>
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h2>Error</h2>
+<br />
+<p><b>an error occured</b>:<br />
+    code: @Model.Code,
+    <br />message: @Model.Message</p>

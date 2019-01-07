@@ -22,7 +22,7 @@ namespace Presentation.Controllers
 
         public IActionResult Author()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["cookie"] = "author";
             return View();
         }
 

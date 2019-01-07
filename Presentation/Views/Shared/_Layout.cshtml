@@ -15,9 +15,11 @@
     <link type="text/css" href="~/css/datepicker.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="~/js/bootstrap-datepicker.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".datepicker").datepicker(    
+            $(".datepicker").datepicker(
                 {
                     format: 'yyyy-mm-dd',
                     autoclose: true
@@ -30,7 +32,7 @@
         <!-- menu -->
         <header class="masthead mb-auto">
             <div class="inner">
-                <h3 class="masthead-brand">Cover</h3>
+                <h3 class="masthead-brand">Currencies</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     @{ string cookie = ViewData["cookie"].ToString();
                         string index = (cookie == "index") ? "nav-link active" : "nav-link";
