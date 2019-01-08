@@ -1,4 +1,5 @@
-﻿@model Application.Models.CalculateValute;
+﻿@using Application.Models
+@model Application.DTO.ResultModel<CalculateValute>
 
 @{
     ViewData["Title"] = "Calculator";
@@ -8,8 +9,8 @@
 <h1>convert the course</h1><br /><br />
 
 <form asp-controller="Calculator" asp-action="Calculate" method="post">
-    <input type="hidden" id="basiccurrency" name="basiccurrency" value="">
-    <input type="hidden" id="targetcurrency" name="targetcurrency" value="">
+    <input type="hidden" id="basiccurrency" name="basiccurrency" value="0">
+    <input type="hidden" id="targetcurrency" name="targetcurrency" value="0">
     <input type="hidden" id="value" name="value" value="0">
     <div class="row">
         <div class="col">
@@ -59,7 +60,6 @@
         <div class="col">
             <div class="form-group">
                 <label for="formGroupExampleInput2">target currency</label>
-                <input type="text" class="form-control" name="targetcurrencyinput" id="targetcurrencyinput" placeholder="enter a value">
                 <select class="custom-select my-1 mr-sm-2" name="targetcurrencycode" id="targetcurrencycode">
                     <option selected>Choose...</option>
                     <option value="THB">bat (Tajlandia) (THB)</option>
@@ -105,12 +105,12 @@
         <button type="submit" class="btn-secondary">calculate</button>
     </div>
     <br />
-    @{ if (Model.value != 0)
+    @{ if (Model.Code == 200)
         {
             <p>
-                current sales rate: @Model.basiccurrency (@Model.basiccurrencycode)<br />
-                current buy rate: @Model.targetcurrency (@Model.targetcurrencycode)<br /><br />
-                <h2>you receive:  @Model.value (@Model.targetcurrencycode)</h2>
+                current sales rate: @Model.Result.basiccurrency (@Model.Result.basiccurrencycode)<br />
+                current buy rate: @Model.Result.targetcurrency (@Model.Result.targetcurrencycode)<br /><br />
+                <h2>you receive:  @Decimal.Round(Model.Result.value, 2) (@Model.Result.targetcurrencycode)</h2>
             </p>
         }
     }

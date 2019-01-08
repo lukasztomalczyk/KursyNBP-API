@@ -1,10 +1,12 @@
-﻿using Application.DTO;
+﻿using Application.Currency;
+using Application.DTO;
 using Application.Models;
 using Infrastructure.ConnectionClient;
 using Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -12,57 +14,36 @@ namespace Application.Services
     public class CalculatorService : ICalculatorService
     {
         private readonly IDefaultHttpClientAccessor _client;
+        private readonly IExchangeRateService _exchangeRateService;
         private readonly Urls _options;
 
-        public CalculatorService(IDefaultHttpClientAccessor client, IOptions<Urls> options)
+        public CalculatorService(IDefaultHttpClientAccessor client, IOptions<Urls> options, IExchangeRateService exchangeRateService)
         {
             _client = client;
+            this._exchangeRateService = exchangeRateService;
             _options = options.Value;
             _client.SetConnection(_options.MainURL);
         }
 
-        public async Task<ResultModel<ReceivedCurrencyModel[]>> ExchangeRateAsync(CalculateValute calculateValute)
+        public async Task<ResultModel<CalculateValute>> ExchangeRateAsync(CalculateValute calculateValute)
         {
-            var url1 = _options.ExchangeRateURL + calculateValute.basiccurrencycode+"/today/";
-            var result1 = await _client.GetStringAsync(url1);
-            var url2 = _options.ExchangeRateURL + calculateValute.targetcurrencycode + "/today/";
-            var result2 = await _client.GetStringAsync(url2);
+            var actualyCurrency = await _exchangeRateService.CurrenciesAsync(default(DateTime), default(DateTime));
+            var targetCurrencyList = actualyCurrency.Result.ToList();
+            var targetCurrency = targetCurrencyList[0].rates;
 
-            var listReceivedModel = new ReceivedCurrencyModel[1];
-            try
-            {
-                listReceivedModel[0] = MapToReceivedCurrencyModel(result1);
-                listReceivedModel[1] = MapToReceivedCurrencyModel(result2);
-                return new ResultModel<ReceivedCurrencyModel[]>()
-                {
-                    Code = 200,
-                    Message = null,
-                    Result = listReceivedModel
-                };
-            }
-            catch (Exception)
-            {
-                return new ResultModel<ReceivedCurrencyModel[]>()
-                {
-                    Code = 400,
-                    Message = "An error occurred while trying to read the current exchange rates",
-                    Result = default(ReceivedCurrencyModel[])
-                };
-            }
-   
-        }
+            calculateValute.targetcurrency = targetCurrency.Where(a => a.code == calculateValute.targetcurrencycode)
+                    .Select(a => a.mid).First();
+            calculateValute.basiccurrency = targetCurrency.Where(a => a.code == calculateValute.basiccurrencycode)
+                    .Select(a => a.mid).First();
 
-        private ReceivedCurrencyModel MapToReceivedCurrencyModel(string data)
-        {
-            try
+            calculateValute.value = (calculateValute.basiccurrency * calculateValute.basiccurrencyinput) / calculateValute.targetcurrency;
+
+            return new ResultModel<CalculateValute>()
             {
-                var result = JsonConvert.DeserializeObject<ReceivedCurrencyModel>(data);
-                return result;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Deserializacja niepowiaodła się", e);
-            }
+                Code = 200,
+                Message = null,
+                Result = calculateValute
+            };
         }
     }
 

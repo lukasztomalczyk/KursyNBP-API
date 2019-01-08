@@ -6,6 +6,6 @@ namespace Application.Services
 {
     public interface ICalculatorService
     {
-        Task<ResultModel<ReceivedCurrencyModel[]>> ExchangeRateAsync(CalculateValute calculateValute);
+        Task<ResultModel<CalculateValute>> ExchangeRateAsync(CalculateValute calculateValute);
     }
 }

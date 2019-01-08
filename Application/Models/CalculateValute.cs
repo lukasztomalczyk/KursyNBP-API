@@ -8,16 +8,14 @@ namespace Application.Models
     public class CalculateValute
     {
         [Required]
-        public double basiccurrencyinput { get; set; }
+        public decimal basiccurrencyinput { get; set; }
         [Required]
         public string basiccurrencycode { get; set; }
         [Required]
-        public double targetcurrencyinput { get; set; }
-        [Required]
         public string targetcurrencycode { get; set; }
 
-        public double basiccurrency { get; set; }
-        public double targetcurrency { get; set; }
-        public double value { get; set; }
+        public decimal basiccurrency { get; set; }
+        public decimal targetcurrency { get; set; }
+        public decimal value { get; set; }
     }
 }

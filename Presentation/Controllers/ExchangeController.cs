@@ -59,7 +59,7 @@ namespace Presentation.Controllers
             }
             else
             {
-                return View("~/Views/Error/Index.cshtml", new ResultModel<object>() { Code = 404, Message = "Zakres dat się nie zgadza!"});
+                return View("~/Views/Error/Index.cshtml", new ResultModel<object>() { Code = 404, Message = "the date range is correct" });
             }
 
         }
